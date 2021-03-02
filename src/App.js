@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MakeTeam from './Components/MakeTeam/MakeTeam';
 import ShowPlayers from './Components/ShowPlayers/ShowPlayers';
+import Footer from './Components/Footer/Footer';
 function App() {
   const [allPlayers, setAllPlayers] = useState([]);
   const [myPlayers, setMyPlayers] = useState([]);
@@ -27,33 +28,34 @@ function App() {
   return (
     <div className="bg-dark">
       <div className="container py-3">
-            <div className="d-flex justify-content-center w-50 row mx-auto">
-                <img className="col-md-4 image-fluid" style={{height: "150px"}} src={logo} alt=""/>
-                <h4 className="d-flex col-md-8 align-items-center text-light">Fantastic Football Club</h4>
-            </div>
-            <div className="row my-4 justify-content-center">
-                <div className="col-md-3 text-center text-light d-flex">
-                    <div>
-                      <h3 className="text-warning">Club Details</h3>
-                      <h6>Budget: {totalBudget} USD</h6>
-                      <h6>No. Of Player: {myPlayers.length}</h6>
+          <div className="d-flex justify-content-center w-50 row mx-auto">
+              <img className="col-md-4 image-fluid" style={{height: "150px"}} src={logo} alt=""/>
+              <h4 className="d-flex col-md-8 align-items-center text-light">Fantastic Football Club</h4>
+          </div>
+          <div className="row my-4 justify-content-center">
+              <div className="col-md-3 text-center text-light d-flex">
+                <div>
+                  <h3 className="text-warning">Club Details</h3>
+                  <h6>Budget: {totalBudget} USD</h6>
+                  <h6>No. Of Player: {myPlayers.length}</h6>
+                  {
+                      myPlayers.map(mp => {
+                      return <MakeTeam key={mp.id} myPlayer={mp} myPlayers={myPlayers} removePlayers={removePlayers}/>
+                    })
+                  }
+                </div>
+                <div className="v-line ml-2 my-2"></div>
+              </div>
+              <div className="col-md-9">
+                  <div className="row">
                       {
-                          myPlayers.map(mp => {
-                          return <MakeTeam key={mp.id} myPlayer={mp} myPlayers={myPlayers} removePlayers={removePlayers}/>
-                      })
+                          allPlayers.map(player => <ShowPlayers key={player.id} player={player}myPlayers={myPlayers} allPlayers={allPlayers} addPlayers={addPlayers} />)
                       }
-                    </div>
-                    <div className="v-line ml-2 my-2"></div>
-                </div>
-                <div className="col-md-9">
-                    <div className="row">
-                        {
-                            allPlayers.map(player => <ShowPlayers key={player.id} player={player} myPlayers={myPlayers} allPlayers={allPlayers} addPlayers={addPlayers} />)
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
+                  </div>
+              </div>
+          </div>
+        <Footer/>
+      </div>
     </div>
   );
 }
